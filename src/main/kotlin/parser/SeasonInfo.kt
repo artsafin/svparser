@@ -37,8 +37,4 @@ data class SeasonInfo(
 
         fun build() = SeasonInfo(this)
     }
-
-    fun loadImg(loader: Loader): ByteArray? {
-        return loader.loadImage(imgUrl)
-    }
 }
