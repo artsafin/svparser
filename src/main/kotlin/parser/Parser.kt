@@ -1,8 +1,8 @@
 package parser
 
-import parser.loader.Loader
-import java.util.*
-import java.util.regex.Matcher
+import org.jsoup.Jsoup
+import parser.dto.SeasonInfo
+import parser.dto.SeasonLink
 import java.util.regex.Pattern
 
 /*
@@ -13,84 +13,44 @@ import java.util.regex.Pattern
                                         Плантация</a>
  */
 
-class Parser(val loader: Loader) {
-    val rowPattern: Pattern = Pattern.compile("<a([^>]*)>([^<]*)</a>");
-    val attrPattern: Pattern = Pattern.compile("\\b([^=]+)=\\s*[\"']([^'\"]*)[\"']")
-    val idPattern: Pattern = Pattern.compile("serial-(\\d+)")
-    val dataImgSrcPattern: Pattern = Pattern.compile("img[^>]+src=['\"]([^'\"]+)['\"]")
-    val dataDescrPattern: Pattern = Pattern.compile("<td.*?<td[^>]*>(.*?)<br", Pattern.DOTALL)
-    val dataGenrePattern: Pattern = Pattern.compile("Жанр.*?>(.*?)<br", Pattern.DOTALL)
-    val dataYearPattern: Pattern = Pattern.compile("Вышел.*?>(.*?)<br", Pattern.DOTALL)
+class Parser() {
+    data class Flags(val onlySeasonList: Boolean)
 
-    fun parse(processCb: (Serial) -> Unit): ArrayList<Serial> {
-        val result: ArrayList<Serial> = ArrayList<Serial>()
-        val data = loader.loadSerialList()
-
-        val rowMatcher = rowPattern.matcher(data)
-        while (rowMatcher.find()) {
-            val serial = parseSerial(rowMatcher)
-            result.add(serial)
-            processCb(serial)
+    fun parseFromFilter(filterStr: String): List<SeasonLink> {
+        val doc = Jsoup.parseBodyFragment(filterStr)
+        return doc.select("a[data]").map {
+            val id = it.id().substring(1).toInt()
+            SeasonLink(id, it.text().trim(), it.attr("href"))
         }
-
-        return result
     }
 
-    private fun parseSerial(matcher: Matcher): Serial {
-        val link = matcher.group(1).replace(Regex("\\s+"), " ").trim()
-        val name = matcher.group(2).replace(Regex("\\s+"), " ").trim()
+    fun parsePage(str: String, flags: Flags): List<SeasonLink> {
+        val doc = Jsoup.parse(str)
 
-        var id: String? = null
-        var dataLink: String? = null
-        var hrefLink: String? = null
-        val attrMatcher = attrPattern.matcher(link)
-        while (attrMatcher.find()) {
-            if (attrMatcher.group(1) == "id") {
-                id = attrMatcher.group(2)
-            }
-            if (attrMatcher.group(1) == "data") {
-                dataLink = attrMatcher.group(2)
-            }
-            if (attrMatcher.group(1) == "href") {
-                hrefLink = attrMatcher.group(2)
-            }
+        val selector = if (flags.onlySeasonList) ".seasonlist a[href^=/serial-]" else "a[href^=/serial-]"
+
+        return doc.select(selector).map {
+            val text = it.ownText().replace(">>>", "").trim()
+
+            val href = it.attr("href")
+            val idMatcher = Pattern.compile("serial-(\\d+)-").matcher(href)
+            val id = if (idMatcher.find()) idMatcher.group(1).toInt() else 0
+            SeasonLink(id, text, href)
         }
-
-        if (hrefLink == null || id == null) {
-            throw IllegalStateException("href or id is not set: " + matcher.group(0))
-        }
-
-        var seasonInfo: SeasonInfo? = null
-        if (dataLink != null) {
-            val str = loader.loadSerialData(dataLink)
-            seasonInfo = parseData(str)
-        }
-
-        return Serial(id, name, hrefLink, dataLink, seasonInfo)
     }
 
-    private fun parseData(str: String): SeasonInfo {
-        val builder = SeasonInfo.Builder()
+    fun parseInfo(str: String): SeasonInfo {
+        val doc = Jsoup.parseBodyFragment(str)
 
-        val imgSrcMatcher = dataImgSrcPattern.matcher(str)
-        if (imgSrcMatcher.find()) {
-            builder.imgUrl(imgSrcMatcher.group(1))
-        }
+        return SeasonInfo.Builder {
+            imgUrl = normalize(doc.select("img[src]").first()?.attr("src"))
 
-        val descrMatcher = dataDescrPattern.matcher(str)
-        if (descrMatcher.find()) {
-            builder.description(descrMatcher.group(1))
-        }
-
-        val genreMatcher = dataGenrePattern.matcher(str)
-        if (genreMatcher.find()) {
-            builder.genres(genreMatcher.group(1))
-        }
-        val yearMatcher = dataYearPattern.matcher(str)
-        if (yearMatcher.find()) {
-            builder.year(yearMatcher.group(1))
-        }
-
-        return builder.build()
+            val contentTd = doc.select("td:last-of-type").first()
+            description = normalize(if (contentTd != null && contentTd.childNodeSize() > 0) contentTd.childNode(0)?.outerHtml() else "")
+            genres = splitByComma(doc.select("span:containsOwn(Жанр)").first()?.nextSibling()?.outerHtml())
+            year = normalize(doc.select("span:containsOwn(Вышел)").first()?.nextSibling()?.outerHtml())
+            originalName = normalize(doc.select("span:containsOwn(Оригинал)").first()?.nextSibling()?.outerHtml())
+            numSeasons = normalizeShort(doc.select("span:containsOwn(Сезонов)").first()?.nextSibling()?.outerHtml())
+        }.build()
     }
 }

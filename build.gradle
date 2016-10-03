@@ -17,6 +17,7 @@ buildscript {
 apply plugin: 'spring-boot'
 apply plugin: 'kotlin'
 apply plugin: 'application'
+apply plugin: 'java'
 
 
 jar {
@@ -34,6 +35,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'org.mongodb:mongodb-driver:3.3.0'
     compile 'org.jsoup:jsoup:1.9.2'
+
+    testCompile 'junit:junit:4.12'
 }
 
 springBoot {

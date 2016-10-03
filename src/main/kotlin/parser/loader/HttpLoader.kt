@@ -1,10 +1,10 @@
 package parser.loader
 
 import okhttp3.*
-import parser.SeasonInfo
+import parser.dto.SeasonInfo
 import parser.dto.SeasonLink
 
-class HttpLoader : Loader {
+class HttpLoader(val delayMs: Long) : Loader {
     val http = OkHttpClient()
 
     private val BASE_URL = "http://seasonvar.ru"
@@ -19,12 +19,14 @@ class HttpLoader : Loader {
     )
 
     private fun defaultRequestBuilder(url: String): Request.Builder {
+        if (delayMs > 0) Thread.sleep(delayMs)
+
         return Request.Builder()
                 .url(url)
                 .headers(Headers.of(HEADERS))
     }
 
-    override fun loadFromFilter(): String {
+    override fun loadFilter(): String {
         val request = defaultRequestBuilder(INDEX_URL)
                 .method("POST", RequestBody.create(FILTER_POST_MEDIATYPE, FILTER_POST_BODY))
                 .build()
@@ -35,7 +37,7 @@ class HttpLoader : Loader {
     }
 
     override fun loadUrl(url: String): String {
-        val request = defaultRequestBuilder(url)
+        val request = defaultRequestBuilder(BASE_URL + url)
                 .build()
 
         val response = http.newCall(request).execute()
