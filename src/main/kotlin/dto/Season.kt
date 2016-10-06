@@ -1,4 +1,4 @@
-package parser.dto
+package dto
 
 data class Season(
         val commonName: String,

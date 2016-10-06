@@ -1,7 +1,7 @@
 package parser.loader
 
-import parser.dto.SeasonInfo
-import parser.dto.SeasonLink
+import dto.SeasonInfo
+import dto.SeasonLink
 
 interface Loader {
     fun loadFilter(): String

@@ -1,5 +1,6 @@
 package parser.dto
 
+import dto.SeasonInfo
 import org.junit.Test
 
 import org.junit.Assert.*

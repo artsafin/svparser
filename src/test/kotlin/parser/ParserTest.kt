@@ -2,7 +2,7 @@ package parser
 
 import org.junit.Assert.*
 import org.junit.Test
-import parser.dto.SeasonLink
+import dto.SeasonLink
 
 class ParserTest {
     @Test

@@ -2,8 +2,8 @@ package parser
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.TextNode
-import parser.dto.SeasonInfo
-import parser.dto.SeasonLink
+import dto.SeasonInfo
+import dto.SeasonLink
 import java.util.regex.Pattern
 
 /*

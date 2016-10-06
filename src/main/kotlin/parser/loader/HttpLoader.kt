@@ -1,8 +1,8 @@
 package parser.loader
 
 import okhttp3.*
-import parser.dto.SeasonInfo
-import parser.dto.SeasonLink
+import dto.SeasonInfo
+import dto.SeasonLink
 
 class HttpLoader(val delayMs: Long) : Loader {
     val http = OkHttpClient()

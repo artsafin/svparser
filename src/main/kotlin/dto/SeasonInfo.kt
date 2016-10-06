@@ -1,4 +1,4 @@
-package parser.dto
+package dto
 
 import parser.loader.Loader
 import java.util.*
@@ -58,7 +58,7 @@ data class SeasonInfo(
         if (other == null) {
             return this
         }
-        return SeasonInfo.Builder {
+        return Builder {
             imgUrl = this@SeasonInfo.imgUrl ?: other.imgUrl
             description = this@SeasonInfo.description ?: other.description
             genres = if (this@SeasonInfo.genres.isNotEmpty()) this@SeasonInfo.genres else other.genres

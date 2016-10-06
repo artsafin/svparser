@@ -118,7 +118,7 @@ object TestData {
         }
         </script>
     </div>
-    <div class="main-center-block">
+    <div class="parser.main-center-block">
 
 <div class="head-block">
     <table width="1000" border="0" cellspacing="0" cellpadding="0">
@@ -201,7 +201,7 @@ object TestData {
             <div class="content-top2">
                 <div style="padding: 5px 5px 0 0 ">
                 </div>
-                <table class="main-table" cellpadding="0" cellspacing="0">
+                <table class="parser.main-table" cellpadding="0" cellspacing="0">
                     <tr>
                         <td valign="top" class="td-for-left-block">
                             <div style="padding: 5px 5px 0 0">

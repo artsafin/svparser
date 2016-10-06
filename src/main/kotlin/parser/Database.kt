@@ -7,16 +7,25 @@ import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.InsertManyOptions
-import com.mongodb.client.model.InsertOneOptions
 import com.mongodb.client.model.UpdateOptions
 import org.bson.Document
-import parser.dto.Season
-import java.util.*
+import dto.Season
+import dto.SeasonCodec
+import dto.Serial
+import dto.SerialCodec
+import org.bson.codecs.configuration.CodecRegistries
+import java.util.regex.Pattern
 
-class Database(val name:String) {
-    val mclient = MongoClient("localhost")
-    val db: MongoDatabase = mclient.getDatabase(name)
-    val coll: MongoCollection<Document> = db.getCollection("series")
+class Database(private val name: String) {
+    private val mgoptions = MongoClientOptions.builder()
+            .codecRegistry(CodecRegistries.fromRegistries(
+                    CodecRegistries.fromCodecs(SerialCodec(), SeasonCodec()),
+                    MongoClient.getDefaultCodecRegistry()
+            ))
+            .build()
+    private val mclient = MongoClient("localhost", mgoptions)
+    private val db: MongoDatabase = mclient.getDatabase(name)
+    private val coll: MongoCollection<Document> = db.getCollection("series")
 
     fun getDoc(s: Season): Document {
         val doc = Document()
@@ -50,4 +59,37 @@ class Database(val name:String) {
             // ignoring errors
         }
     }
+
+    /*
+        {  $match: {"commonName": {$regex: ".*люб.*"}}  },
+        {  $group: { _id: '$commonName', image: {$first: '$img'} }  },
+        {  $project:{ name: '$_id', image: '$image' }  }
+     */
+    fun findAllSerials() = coll.aggregate(listOf(
+            Document("\$group", Document(mapOf(
+                    "_id" to "\$commonName",
+                    "image" to Document("\$first", "\$img")
+            ))),
+            Document("\$project", Document(mapOf(
+                    "name" to "\$_id",
+                    "image" to "\$image"
+            )))
+    ), Serial::class.java).toList()
+
+
+    fun findSerialsByName(name: String) = coll.aggregate(listOf(
+            Document("\$match", Document(mapOf(
+                    "commonName" to Document("\$regex", ".*" + Pattern.quote(name) + ".*")
+            ))),
+            Document("\$group", Document(mapOf(
+                    "_id" to "\$commonName",
+                    "image" to Document("\$first", "\$img")
+            ))),
+            Document("\$project", Document(mapOf(
+                    "name" to "\$_id",
+                    "image" to "\$image"
+            )))
+    ), Serial::class.java).toList()
+
+    fun findSeasonsByName(name: String) = coll.find(Document("commonName", name), Season::class.java).toList()
 }
