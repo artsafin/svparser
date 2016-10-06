@@ -20,6 +20,7 @@ class Database(val name:String) {
 
     fun getDoc(s: Season): Document {
         val doc = Document()
+                .append("_id", s.link.id)
                 .append("id", s.link.id)
                 .append("commonName", s.commonName)
                 .append("name", s.link.name)

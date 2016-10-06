@@ -81,4 +81,25 @@ class ParserTest {
         assertEquals("2016", info.year)
     }
 
+    @Test
+    fun parseInfoEmpty() {
+        val parser = Parser()
+        val info = parser.parseInfo(TestData.infoEmpty)
+
+        assertNull("description", info.description)
+        assertEquals("genres", hashSetOf<String>(), info.genres)
+        assertNull("imgUrl", info.imgUrl)
+        assertNull("numSeasons", info.numSeasons)
+        assertNull("originalName", info.originalName)
+        assertNull("year", info.year)
+    }
+
+    @Test
+    fun parseInfoGenreEmpty() {
+        val parser = Parser()
+        val info = parser.parseInfo(TestData.infoGenreEmpty)
+
+        assertEquals("genres", hashSetOf<String>(), info.genres)
+    }
+
 }

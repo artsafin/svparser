@@ -6,6 +6,7 @@ import parser.loader.HttpLoader
 import java.util.concurrent.Executors
 import kotlin.concurrent.thread
 import parser.dto.Season
+import parser.dto.SeasonInfo
 
 @SpringBootApplication
 open class Application
@@ -26,9 +27,10 @@ fun main(args: Array<String>) {
             val seasonLinkList = parser.parsePage(loader.loadUrl(lastSeason.pageUrl), Parser.Flags(onlySeasonList = true))
             println(tid + "Season list num: " + seasonLinkList.size)
 
-            val seasonList = seasonLinkList.map {
-                val info = parser.parseInfo(loader.loadInfo(it.dataUrl))
-                Season(lastSeason.name, it, info)
+            val lastSeasonInfo = parser.parseInfo(loader.loadInfo(lastSeason.dataUrl))
+
+            val seasonList = seasonLinkList.reversed().map {
+                Season(lastSeason.name, it, lastSeasonInfo)
             }
             db.insert(seasonList)
         }

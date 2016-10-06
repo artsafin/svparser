@@ -1,6 +1,7 @@
 package parser
 
 import org.jsoup.Jsoup
+import org.jsoup.nodes.TextNode
 import parser.dto.SeasonInfo
 import parser.dto.SeasonLink
 import java.util.regex.Pattern
@@ -44,13 +45,21 @@ class Parser() {
 
         return SeasonInfo.Builder {
             imgUrl = normalize(doc.select("img[src]").first()?.attr("src"))
+            imgUrl = if (imgUrl?.contains("/.")?:true) null else imgUrl
 
             val contentTd = doc.select("td:last-of-type").first()
-            description = normalize(if (contentTd != null && contentTd.childNodeSize() > 0) contentTd.childNode(0)?.outerHtml() else "")
-            genres = splitByComma(doc.select("span:containsOwn(Жанр)").first()?.nextSibling()?.outerHtml())
-            year = normalize(doc.select("span:containsOwn(Вышел)").first()?.nextSibling()?.outerHtml())
-            originalName = normalize(doc.select("span:containsOwn(Оригинал)").first()?.nextSibling()?.outerHtml())
-            numSeasons = normalizeShort(doc.select("span:containsOwn(Сезонов)").first()?.nextSibling()?.outerHtml())
+            description = normalize(if (contentTd != null && contentTd.childNodeSize() > 0 && contentTd.childNode(0) is TextNode) contentTd.childNode(0).outerHtml() else null)
+
+            val genresString = doc.select("span:containsOwn(Жанр)").first()?.nextSibling()?.outerHtml()?.replace("<br>", "")
+            genres = splitByComma(genresString)
+
+            year = normalize(doc.select("span:containsOwn(Вышел)").first()?.nextSibling()?.outerHtml()?.replace("<br>", ""))
+            year = if (year == "") null else year
+
+            originalName = normalize(doc.select("span:containsOwn(Оригинал)").first()?.nextSibling()?.outerHtml()?.replace("<br>", ""))
+            originalName = if (originalName == "") null else originalName
+
+            numSeasons = normalizeShort(doc.select("span:containsOwn(Сезонов)").first()?.nextSibling()?.outerHtml()?.replace("<br>", ""))
         }.build()
     }
 }

@@ -4,18 +4,18 @@ import parser.loader.Loader
 import java.util.*
 
 data class SeasonInfo(
-        val imgUrl: String,
-        val description: String,
+        val imgUrl: String?,
+        val description: String?,
         val genres: Set<String>,
-        val year: String,
+        val year: String?,
         val originalName: String?,
         val numSeasons: Short?
 ) {
     constructor(b: Builder) : this(
-            b.imgUrl ?: "",
-            b.description ?: "",
+            b.imgUrl,
+            b.description,
             b.genres ?: hashSetOf(),
-            b.year ?: "",
+            b.year,
             b.originalName,
             b.numSeasons)
 
@@ -41,7 +41,10 @@ data class SeasonInfo(
             }
         }
         fun normalize(s: String?) = s?.trim()
-        fun splitByComma(s: String?) = s?.trim()?.split(",")?.map { it.trim() }?.toHashSet()
+        fun splitByComma(s: String?) =
+            if (s != null && s.trim().length > 0)
+                s.trim().split(",").map { it.trim() }.toHashSet()
+            else hashSetOf()
 
         fun set(b: Builder.() -> Unit): Builder {
             this.b()
@@ -49,5 +52,19 @@ data class SeasonInfo(
         }
 
         fun build() = SeasonInfo(this)
+    }
+
+    fun deriveFrom(other: SeasonInfo?): SeasonInfo {
+        if (other == null) {
+            return this
+        }
+        return SeasonInfo.Builder {
+            imgUrl = this@SeasonInfo.imgUrl ?: other.imgUrl
+            description = this@SeasonInfo.description ?: other.description
+            genres = if (this@SeasonInfo.genres.isNotEmpty()) this@SeasonInfo.genres else other.genres
+            year = this@SeasonInfo.year
+            originalName = this@SeasonInfo.originalName ?: other.originalName
+            numSeasons = this@SeasonInfo.numSeasons ?: other.numSeasons
+        }.build()
     }
 }

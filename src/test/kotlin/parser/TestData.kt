@@ -1,6 +1,9 @@
 package parser
 
 object TestData {
+    val infoGenreEmpty = """
+<table width="100%"  border="0" cellpadding="3" cellspacing="0"><tr><td valign="top" align="center" width="120" ><img src="http://cdn.seasonvar.ru/oblojka/.jpg" width="120" style="border: 5px white solid;"></td><td valign="top" align="left"><br><br><br><br><span style="color: #be0750;">Жанр:</span><br><span style="color: #be0750;">Вышел:</span><br><br></td></tr></table>
+"""
     val infoMinimal = """
 <table width="100%"  border="0" cellpadding="3" cellspacing="0"><tr><td valign="top" align="center" width="120" ><img src="http://cdn.seasonvar.ru/oblojka/9886.jpg" width="120" style="border: 5px white solid;"></td><td valign="top" align="left">
             Познавательная телепрограмма с телеведущим Дмитрием Пучковым. Передача расскажет об истории танкостроения, эволюция первых машин Первой Мировой войны до суперсовременных мощных машин... Мы наглядно увидим особенности каждой машины...
@@ -19,6 +22,10 @@ object TestData {
             Предлагаем вашему вниманию двадцатый сезон знаменитого проекта &quot;Южный парк&quot;. Сюжет развивается вокруг жизни и приключений четверки друзей, их товарищей и знакомых. Все они живут в небольшом городке Южный Парк, это где-то в штате К...
                         <br><br><span style="color: #be0750;">Оригинал:</span>South Park<br><br><br><span style="color: #be0750;">Жанр:</span>комедия, анимационные
                             <br /><span style="color: #be0750;">Ограничение: </span><span style="color: #ff7600">18+</span><br><span style="color: #be0750;">Вышел:</span> 2016<br><span style="color: #be0750;">Сезонов:</span>20<br><br><span style="color: #be0750;">KINOPOISK:</span> 8.01 <small>(59337 голосов)</small><br><span style="color: #be0750;">IMDB:</span> 8.80 <small>(241329 голосов)</small></td></tr></table>
+"""
+
+    val infoEmpty = """
+<table width="100%"  border="0" cellpadding="3" cellspacing="0"><tr><td valign="top" align="center" width="120" ><img src="http://cdn.seasonvar.ru/oblojka/.jpg" width="120" style="border: 5px white solid;"></td><td valign="top" align="left"><br><br><br><br><span style="color: #be0750;">Жанр:</span><br><span style="color: #be0750;">Вышел:</span><br><br></td></tr></table>
 """
 
     val filterHtml = """
