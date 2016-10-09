@@ -1,9 +1,7 @@
-package dto
+package com.artsafin.shared.dto
 
-import dto.Serial
 import org.bson.BsonReader
 import org.bson.BsonWriter
-import org.bson.Document
 import org.bson.codecs.Codec
 import org.bson.codecs.DecoderContext
 import org.bson.codecs.EncoderContext

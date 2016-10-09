@@ -1,4 +1,4 @@
-package dto
+package com.artsafin.shared.dto
 
 import parser.loader.Loader
 import java.util.*

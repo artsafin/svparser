@@ -1,7 +1,6 @@
-package api
+package com.artsafin.api
 
 import dto.PlainSeason
-import dto.Season
 import dto.Serial
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping

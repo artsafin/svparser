@@ -1,9 +1,9 @@
-package parser
+package com.artsafin.parser
 
+import com.artsafin.shared.Database
+import com.artsafin.shared.dto.Season
 import parser.loader.HttpLoader
 import java.util.concurrent.Executors
-import dto.Season
-import java.util.concurrent.TimeUnit
 
 fun main(args: Array<String>) {
     val db = Database("svparser2")

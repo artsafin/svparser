@@ -1,4 +1,4 @@
-package dto
+package com.artsafin.shared.dto
 
 data class SeasonLink(
         val id: Int,

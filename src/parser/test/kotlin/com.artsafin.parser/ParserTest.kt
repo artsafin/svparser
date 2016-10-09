@@ -1,8 +1,8 @@
-package parser
+package com.artsafin.parser
 
 import org.junit.Assert.*
 import org.junit.Test
-import dto.SeasonLink
+import `in`.artsaf.dto.SeasonLink
 
 class ParserTest {
     @Test
