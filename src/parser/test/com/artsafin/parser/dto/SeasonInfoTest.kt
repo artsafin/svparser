@@ -1,6 +1,6 @@
 package com.artsafin.parser.dto
 
-import `in`.artsaf.dto.SeasonInfo
+import com.artsafin.shared.dto.SeasonInfo
 import org.junit.Test
 
 import org.junit.Assert.*

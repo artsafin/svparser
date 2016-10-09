@@ -1,8 +1,8 @@
 package com.artsafin.parser
 
+import com.artsafin.parser.loader.HttpLoader
 import com.artsafin.shared.Database
 import com.artsafin.shared.dto.Season
-import parser.loader.HttpLoader
 import java.util.concurrent.Executors
 
 fun main(args: Array<String>) {

@@ -1,5 +1,7 @@
 package com.artsafin.parser
 
+import com.artsafin.shared.dto.SeasonInfo
+import com.artsafin.shared.dto.SeasonLink
 import org.jsoup.Jsoup
 import org.jsoup.nodes.TextNode
 import java.util.regex.Pattern

@@ -1,8 +1,6 @@
 package com.artsafin.parser.loader
 
 import okhttp3.*
-import `in`.artsaf.dto.SeasonInfo
-import `in`.artsaf.dto.SeasonLink
 
 class HttpLoader(val delayMs: Long) : Loader {
     val http = OkHttpClient()

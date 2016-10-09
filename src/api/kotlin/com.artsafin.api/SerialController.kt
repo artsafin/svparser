@@ -1,13 +1,12 @@
 package com.artsafin.api
 
-import dto.PlainSeason
-import dto.Serial
+import com.artsafin.shared.Database
+import com.artsafin.shared.dto.PlainSeason
+import com.artsafin.shared.dto.Serial
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import parser.Database
-import java.util.concurrent.atomic.AtomicLong
 
 @RestController
 class SerialController {
