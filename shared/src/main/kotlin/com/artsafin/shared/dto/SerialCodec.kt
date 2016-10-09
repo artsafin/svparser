@@ -16,12 +16,12 @@ class SerialCodec: Codec<Serial> {
     }
 
     override fun decode(reader: BsonReader?, decoderContext: DecoderContext?): Serial {
-        val ds = reader?.readStartDocument()
-        val _id = reader?.readString("_id")
+        reader?.readStartDocument()
+        reader?.readString("_id")
         val image = reader?.readString("image")
         val name = reader?.readString("name")
 
-        val de = reader?.readEndDocument()
+        reader?.readEndDocument()
 
         return Serial(name ?: "", image ?: "")
     }

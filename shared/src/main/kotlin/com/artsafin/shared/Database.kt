@@ -16,16 +16,18 @@ import com.artsafin.shared.dto.SerialCodec
 import org.bson.codecs.configuration.CodecRegistries
 import java.util.regex.Pattern
 
-class Database(private val name: String) {
+val DATABASE_DEFAULT = "svparser2"
+
+class Database(private val host: String, private val name: String, private val collectionName: String = "series") {
     private val mgoptions = MongoClientOptions.builder()
             .codecRegistry(CodecRegistries.fromRegistries(
                     CodecRegistries.fromCodecs(SerialCodec(), SeasonCodec()),
                     MongoClient.getDefaultCodecRegistry()
             ))
             .build()
-    private val mclient = MongoClient("localhost", mgoptions)
+    private val mclient = MongoClient(host, mgoptions)
     private val db: MongoDatabase = mclient.getDatabase(name)
-    private val coll: MongoCollection<Document> = db.getCollection("series")
+    private val coll: MongoCollection<Document> = db.getCollection(collectionName)
 
     fun getDoc(s: Season): Document {
         val doc = Document()

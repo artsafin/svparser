@@ -7,6 +7,6 @@ include 'services:webservice'
 
 rootProject.name = 'svparser'
 
-include ':src:api'
-include ':src:shared'
-include ':src:parser'
+include 'api'
+include 'shared'
+include 'parser'
