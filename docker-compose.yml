@@ -1,0 +1,10 @@
+api:
+  build: api
+  links:
+    - mongo
+parser:
+  build: parser
+  links:
+    - mongo
+mongo:
+  image: mongo

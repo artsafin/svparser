@@ -6,6 +6,7 @@ import com.artsafin.shared.Database
 import com.artsafin.shared.dto.Season
 import org.apache.commons.cli.*
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
 
 val optsScheme = Options()
@@ -18,7 +19,6 @@ val optsScheme = Options()
                 .build())
 
 private fun getCmd(args: Array<String>): CommandLine {
-    val opts: CommandLine
     try {
         return DefaultParser().parse(optsScheme, args)
     } catch (e: MissingOptionException) {
@@ -34,28 +34,43 @@ fun main(args: Array<String>) {
     val loader = HttpLoader(500)
     val parser = Parser()
 
+    val cores = Runtime.getRuntime().availableProcessors()
 
-    println("[MAIN] begin")
+    println("[MAIN] begin (%d cpus)".format(cores))
 
-    val pool = Executors.newFixedThreadPool(4)
+    val pool = Executors.newFixedThreadPool(cores)
+    var counter = 0
 
     for (lastSeason in parser.parseFromFilter(loader.loadFilter())) {
-        pool.submit {
-            val tid = "[" + Thread.currentThread().id.toString() + "] "
-            println(tid + "Parsed from filter: " + lastSeason)
-            val seasonLinkList = parser.parsePage(loader.loadUrl(lastSeason.pageUrl), Parser.Flags(onlySeasonList = true))
-            println(tid + "Season list num: " + seasonLinkList.size)
-
-            val lastSeasonInfo = parser.parseInfo(loader.loadInfo(lastSeason.dataUrl))
-
-            val seasonList = seasonLinkList.reversed().map {
-                Season(lastSeason.name, it, lastSeasonInfo)
-            }
-            db.insert(seasonList)
-
-            println(tid + "finished")
+        if (counter++ > 10) {
+            break
         }
+        pool.submit {
+            try {
+                val tid = "[" + Thread.currentThread().id.toString() + "] "
+                println(tid + "Parsed from filter: " + lastSeason)
+                val seasonLinkList = parser.parsePage(loader.loadUrl(lastSeason.pageUrl), Parser.Flags(onlySeasonList = true))
+                println(tid + "Season list num: " + seasonLinkList.size)
+
+                val lastSeasonInfo = parser.parseInfo(loader.loadInfo(lastSeason.dataUrl))
+
+                val seasonList = seasonLinkList.reversed().map {
+                    Season(lastSeason.name, it, lastSeasonInfo)
+                }
+                db.insert(seasonList)
+
+                println(tid + "finished")
+            } catch (eInt: InterruptedException) {
+                eInt.printStackTrace()
+            }
+        }
+        println("[MAIN] finished pooling")
     }
 
-    println("[MAIN] complete")
+    pool.shutdown()
+    if (!pool.awaitTermination(1, TimeUnit.MINUTES)) {
+        println("[MAIN] didn't wait until pool has exited")
+    } else {
+        println("[MAIN] complete")
+    }
 }
