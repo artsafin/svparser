@@ -29,6 +29,13 @@ class Database(private val host: String, private val name: String, private val c
     private val db: MongoDatabase = mclient.getDatabase(name)
     private val coll: MongoCollection<Document> = db.getCollection(collectionName)
 
+    fun isAlive() = try {
+        mclient.address
+        true
+    } catch (e: Exception) {
+        false
+    }
+
     fun getDoc(s: Season): Document {
         val doc = Document()
                 .append("_id", s.link.id)

@@ -1,10 +1,24 @@
-api:
+# docker run --name svapi -d -p 80:8080 -e "JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom;DB=mongo" --link mongo:mongo artsafin/svapi
+svapi:
   build: api
+  image: artsafin/svapi
+  ports:
+    - "80:8080"
   links:
     - mongo
-parser:
+  environment:
+    JAVA_OPTS: "-Djava.security.egd=file:/dev/./urandom"
+    DB: mongo
+
+# docker run -d --link mongo:mongo --name svparser artsafin/svparser-parser --db=mongo
+svparser:
   build: parser
+  image: artsafin/svparser
+  command: "--db=mongo"
   links:
     - mongo
+
 mongo:
   image: mongo
+  volumes:
+        - /data/svparser:/data/db

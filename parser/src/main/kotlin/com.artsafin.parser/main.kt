@@ -31,6 +31,11 @@ fun main(args: Array<String>) {
     val opts = getCmd(args)
 
     val db = Database(opts.getOptionValue("db"), DATABASE_DEFAULT)
+    if (!db.isAlive()) {
+        println("[MAIN] db is down. Exiting")
+        exitProcess(1)
+    }
+
     val loader = HttpLoader(500)
     val parser = Parser()
 
@@ -60,7 +65,6 @@ fun main(args: Array<String>) {
                 eInt.printStackTrace()
             }
         }
-        println("[MAIN] finished pooling")
     }
 
     pool.shutdown()
