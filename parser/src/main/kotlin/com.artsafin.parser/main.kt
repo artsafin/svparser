@@ -39,12 +39,8 @@ fun main(args: Array<String>) {
     println("[MAIN] begin (%d cpus)".format(cores))
 
     val pool = Executors.newFixedThreadPool(cores)
-    var counter = 0
 
     for (lastSeason in parser.parseFromFilter(loader.loadFilter())) {
-        if (counter++ > 10) {
-            break
-        }
         pool.submit {
             try {
                 val tid = "[" + Thread.currentThread().id.toString() + "] "
