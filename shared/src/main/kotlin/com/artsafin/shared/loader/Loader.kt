@@ -1,4 +1,4 @@
-package com.artsafin.parser.loader
+package com.artsafin.shared.loader
 
 interface Loader {
     fun loadFilter(): String

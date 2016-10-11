@@ -1,8 +1,8 @@
-package com.artsafin.parser.loader
+package com.artsafin.shared.loader
 
 import okhttp3.*
 
-class HttpLoader(val delayMs: Long) : Loader {
+open class HttpLoader : Loader {
     val http = OkHttpClient()
 
     private val BASE_URL = "http://seasonvar.ru"
@@ -16,9 +16,7 @@ class HttpLoader(val delayMs: Long) : Loader {
             "X-Requested-With" to "XMLHttpRequest"
     )
 
-    private fun defaultRequestBuilder(url: String): Request.Builder {
-        if (delayMs > 0) Thread.sleep(delayMs)
-
+    protected open fun defaultRequestBuilder(url: String): Request.Builder {
         return Request.Builder()
                 .url(url)
                 .headers(Headers.of(HEADERS))
