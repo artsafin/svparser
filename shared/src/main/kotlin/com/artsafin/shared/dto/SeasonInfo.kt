@@ -1,5 +1,7 @@
 package com.artsafin.shared.dto
 
+import org.bson.Document
+
 data class SeasonInfo(
         val imgUrl: String?,
         val description: String?,
@@ -8,6 +10,25 @@ data class SeasonInfo(
         val originalName: String?,
         val numSeasons: Short?
 ) {
+    constructor(doc: Document) : this(SeasonInfo.Builder {
+        description = doc.getString("description")
+
+        genres = setOf()
+        val genresDoc = doc["genres"]
+        if (genresDoc != null) {
+            try {
+                genres = (genresDoc as List<String>).toSet()
+            } catch (exc: TypeCastException) {
+                // Just leave default empty set
+            }
+        }
+
+        year = doc.getString("year")
+        imgUrl = doc.getString("img")
+        originalName = doc.getString("originalName")
+        numSeasons = doc.getInteger("numSeasons")?.toShort()
+    })
+
     constructor(b: Builder) : this(
             b.imgUrl,
             b.description,
@@ -24,7 +45,7 @@ data class SeasonInfo(
         var originalName: String? = null
         var numSeasons: Short? = null
 
-        constructor(b: Builder.() -> Unit): this() {
+        constructor(b: Builder.() -> Unit) : this() {
             set(b)
         }
 
@@ -37,11 +58,12 @@ data class SeasonInfo(
                 return null
             }
         }
+
         fun normalize(s: String?) = s?.trim()
         fun splitByComma(s: String?) =
-            if (s != null && s.trim().length > 0)
-                s.trim().split(",").map { it.trim() }.toHashSet()
-            else hashSetOf()
+                if (s != null && s.trim().length > 0)
+                    s.trim().split(",").map { it.trim() }.toHashSet()
+                else hashSetOf()
 
         fun set(b: Builder.() -> Unit): Builder {
             this.b()

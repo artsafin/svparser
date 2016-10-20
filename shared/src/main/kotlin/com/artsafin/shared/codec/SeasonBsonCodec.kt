@@ -1,5 +1,8 @@
-package com.artsafin.shared.dto
+package com.artsafin.shared.codec
 
+import com.artsafin.shared.dto.Season
+import com.artsafin.shared.dto.SeasonInfo
+import com.artsafin.shared.dto.SeasonLink
 import org.bson.BsonReader
 import org.bson.BsonType
 import org.bson.BsonWriter
@@ -7,7 +10,7 @@ import org.bson.codecs.Codec
 import org.bson.codecs.DecoderContext
 import org.bson.codecs.EncoderContext
 
-class SeasonCodec: Codec<Season> {
+class SeasonBsonCodec : Codec<Season> {
     override fun encode(writer: BsonWriter?, value: Season?, encoderContext: EncoderContext?) {
     }
 

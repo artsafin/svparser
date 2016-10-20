@@ -1,12 +1,13 @@
-package com.artsafin.shared.dto
+package com.artsafin.shared.codec
 
+import com.artsafin.shared.dto.Serial
 import org.bson.BsonReader
 import org.bson.BsonWriter
 import org.bson.codecs.Codec
 import org.bson.codecs.DecoderContext
 import org.bson.codecs.EncoderContext
 
-class SerialCodec: Codec<Serial> {
+class SerialBsonCodec : Codec<Serial> {
     override fun encode(writer: BsonWriter?, value: Serial?, encoderContext: EncoderContext?) {
         writer?.writeStartDocument()
         writer?.writeString("_id", value?.name)

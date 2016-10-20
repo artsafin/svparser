@@ -1,6 +1,7 @@
-package com.artsafin.parser.dto
+package com.artsafin.shared.dto
 
 import com.artsafin.shared.dto.SeasonInfo
+import org.bson.Document
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -58,4 +59,44 @@ class SeasonInfoTest {
         assertEquals(result.numSeasons, parent?.numSeasons)
     }
 
+    @Test
+    fun docCtorNormalItem() {
+        val doc = Document.parse(TestData.singleItem)
+
+        val info = SeasonInfo(doc)
+
+        assertEquals("http://cdn.seasonvar.ru/oblojka/12909.jpg", info.imgUrl)
+        assertEquals("Девятнадцатый век. Лондон. Канун Рождества. К великому сыщику", info.description)
+        assertEquals(setOf("детективы", "триллеры"), info.genres)
+        assertEquals("2016", info.year)
+        assertEquals("Sherlock", info.originalName)
+        assertEquals(4.toShort(), info.numSeasons)
+    }
+    @Test
+    fun docCtorNullNumSeasons() {
+        val doc = Document.parse(TestData.singleItemNullNumSeasons)
+
+        val info = SeasonInfo(doc)
+
+        assertEquals("http://cdn.seasonvar.ru/oblojka/12909.jpg", info.imgUrl)
+        assertNull(info.numSeasons)
+    }
+
+    @Test
+    fun docCtorEmptyGenres() {
+        val doc = Document.parse(TestData.singleItemEmptyGenres)
+
+        val info = SeasonInfo(doc)
+
+        assertEquals(setOf<String>(), info.genres)
+    }
+
+    @Test
+    fun docCtorNullGenres() {
+        val doc = Document.parse(TestData.singleItemNullGenres)
+
+        val info = SeasonInfo(doc)
+
+        assertEquals(setOf<String>(), info.genres)
+    }
 }

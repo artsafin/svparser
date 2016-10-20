@@ -10,9 +10,9 @@ import com.mongodb.client.model.InsertManyOptions
 import com.mongodb.client.model.UpdateOptions
 import org.bson.Document
 import com.artsafin.shared.dto.Season
-import com.artsafin.shared.dto.SeasonCodec
+import com.artsafin.shared.codec.SeasonBsonCodec
 import com.artsafin.shared.dto.Serial
-import com.artsafin.shared.dto.SerialCodec
+import com.artsafin.shared.codec.SerialBsonCodec
 import org.bson.codecs.configuration.CodecRegistries
 import java.util.regex.Pattern
 
@@ -21,7 +21,7 @@ val DATABASE_DEFAULT = "svparser2"
 class Database(private val host: String, private val name: String, private val collectionName: String = "series") {
     private val mgoptions = MongoClientOptions.builder()
             .codecRegistry(CodecRegistries.fromRegistries(
-                    CodecRegistries.fromCodecs(SerialCodec(), SeasonCodec()),
+                    CodecRegistries.fromCodecs(SerialBsonCodec(), SeasonBsonCodec()),
                     MongoClient.getDefaultCodecRegistry()
             ))
             .build()
@@ -83,7 +83,7 @@ class Database(private val host: String, private val name: String, private val c
                     "name" to "\$_id",
                     "image" to "\$image"
             )))
-    ), Serial::class.java).toList()
+    )).map(::Serial).toList()
 
 
     fun findSerialsByName(name: String) = coll.aggregate(listOf(
@@ -98,7 +98,9 @@ class Database(private val host: String, private val name: String, private val c
                     "name" to "\$_id",
                     "image" to "\$image"
             )))
-    ), Serial::class.java).toList()
+    )).map(::Serial).toList()
 
-    fun findSeasonsByName(name: String) = coll.find(Document("commonName", name), Season::class.java).toList()
+    fun findSeasonsByName(name: String): List<Season> {
+        return coll.find(Document("commonName", name)).map(::Season).toList()
+    }
 }
